@@ -15,7 +15,9 @@ test('guest can navigate all public pages', async ({ page }) => {
   await page.goto('/episodes')
   await expect(page.getByRole('heading', { name: 'Випуски', level: 1 })).toBeVisible()
   await page.locator('a[href^="/episode/"]').first().click()
-  await expect(page.getByText(/Ставки скоро/)).toBeVisible()
+  await expect(
+    page.getByText(/Випуск не знайдено|Ставки ще не опубліковано/),
+  ).toBeVisible()
 
   await page.goto('/leaderboard')
   await expect(page.getByRole('heading', { name: 'Лідерборд', level: 1 })).toBeVisible()

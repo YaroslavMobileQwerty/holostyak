@@ -10,7 +10,13 @@ const publicLinks = [
 export function MobileBottomNav() {
   const { isAuthenticated } = useAuth()
   const links = isAuthenticated
-    ? [...publicLinks, { to: '/profile', label: 'Профіль' }]
+    ? [
+        ...publicLinks,
+        { to: '/my-bets', label: 'Ставки' },
+        { to: '/wallet', label: 'Бали' },
+        { to: '/prizes', label: 'Призи' },
+        { to: '/profile', label: 'Профіль' },
+      ]
     : [...publicLinks, { to: '/login', label: 'Увійти' }]
 
   return (

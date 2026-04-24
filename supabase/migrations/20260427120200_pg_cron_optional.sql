@@ -1,0 +1,18 @@
+-- Phase 4: optional pg_cron schedules (hosted Postgres only when extension is enabled).
+-- On Supabase Free / if `create extension pg_cron` fails, rely on Edge Function keep-alive
+-- + external cron hitting auto_lock via your own job or manual Dashboard SQL.
+--
+-- Prerequisites: enable `pg_cron` in Dashboard (Database → Extensions) if available.
+-- `public.auto_lock_expired_events()` is defined in 20260426120400_betting_rpc.sql.
+--
+-- Example (run manually after enabling pg_cron):
+-- select cron.schedule(
+--   'auto-lock-expired-events',
+--   '* * * * *',
+--   $$ select public.auto_lock_expired_events(); $$
+-- );
+-- select cron.schedule(
+--   'keep-alive-db-touch',
+--   '0 3 */4 * *',
+--   $$ select count(*)::int from public.profiles; $$
+-- );

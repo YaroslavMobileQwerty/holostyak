@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { uk } from 'date-fns/locale'
+import { CinematicLink } from '@/motion/CinematicCard'
 
 interface Props {
   id: string
@@ -20,9 +20,9 @@ const STATUS_LABEL: Record<string, string> = {
 
 export function EpisodeCard({ id, number, title, airsAt, status }: Props) {
   return (
-    <Link
+    <CinematicLink
       to={`/episode/${id}`}
-      className="block rounded-2xl border border-white/10 bg-bg-card p-5 transition hover:border-primary/40"
+      className="rounded-2xl border border-white/10 bg-bg-card p-5 transition hover:border-primary/40"
     >
       <div className="flex items-center justify-between">
         <p className="text-xs uppercase tracking-[0.3em] text-primary-live">Випуск {number}</p>
@@ -38,6 +38,6 @@ export function EpisodeCard({ id, number, title, airsAt, status }: Props) {
         <span>{STATUS_LABEL[status]}</span>
         {airsAt && <span>{format(new Date(airsAt), 'dd MMM HH:mm', { locale: uk })}</span>}
       </div>
-    </Link>
+    </CinematicLink>
   )
 }

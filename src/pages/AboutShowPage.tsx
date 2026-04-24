@@ -1,7 +1,12 @@
+import { ZsuBanner } from '@/components/coins/ZsuBanner'
+
 export function AboutShowPage() {
   return (
     <div className="mx-auto max-w-3xl py-10">
       <h1 className="font-serif text-4xl">Про шоу та як працює сайт</h1>
+      <div className="mt-6">
+        <ZsuBanner />
+      </div>
 
       <section className="mt-8">
         <h2 className="font-serif text-2xl">Що таке "Холостяк"?</h2>
