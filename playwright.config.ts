@@ -10,7 +10,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   projects: [
-    { name: 'mobile-chrome', use: { ...devices['iPhone 13'] } },
+    { name: 'mobile-chrome', use: { ...devices['Pixel 5'] } },
     { name: 'desktop-chrome', use: { ...devices['Desktop Chrome'] } },
   ],
   webServer: {
