@@ -1,0 +1,26 @@
+interface Props {
+  name: string
+  bio?: string | null
+  photoUrl?: string | null
+  orderIndex: number
+}
+
+export function BachelorCard({ name, bio, photoUrl, orderIndex }: Props) {
+  return (
+    <article className="overflow-hidden rounded-2xl border border-primary/20 bg-bg-card">
+      <div
+        className="aspect-[3/4] bg-gradient-to-br from-burgundy to-bg-elevated"
+        style={
+          photoUrl ? { backgroundImage: `url(${photoUrl})`, backgroundSize: 'cover' } : undefined
+        }
+      />
+      <div className="p-5">
+        <p className="text-xs uppercase tracking-[0.3em] text-primary-live">
+          Холостяк #{orderIndex}
+        </p>
+        <h3 className="mt-1 font-serif text-2xl">{name}</h3>
+        {bio && <p className="mt-2 text-sm text-rose-dust">{bio}</p>}
+      </div>
+    </article>
+  )
+}
