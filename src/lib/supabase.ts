@@ -8,7 +8,10 @@ const anonKey =
   import.meta.env.VITE_SUPABASE_ANON_KEY || (isDemoMode() ? 'local-demo-anon-key' : '')
 
 if (!url || !anonKey) {
-  throw new Error('Supabase env vars missing. Check .env.local (або VITE_DEMO_MODE=true).')
+  throw new Error(
+    'Supabase env vars missing. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY ' +
+      '(local: .env.local, production: Cloudflare Pages env vars) or enable VITE_DEMO_MODE=true in dev.',
+  )
 }
 
 export const supabase = createClient<Database>(url, anonKey, {

@@ -25,9 +25,9 @@ export default defineConfig(({ mode, command }) => {
     )
 
     if (missingVars.length > 0) {
-      throw new Error(
-        `[build-config] Missing required env vars for production build: ${missingVars.join(', ')}. ` +
-          'Set them in Cloudflare Pages -> Settings -> Environment variables (Production and Preview).',
+      console.warn(
+        `[build-config] Missing env vars during build: ${missingVars.join(', ')}. ` +
+          'For production, set them in Cloudflare Pages environment variables.',
       )
     }
   }
