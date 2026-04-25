@@ -21,8 +21,14 @@
 
 ## Крок 2 — Environment Variables (Production + Preview)
 
+Де додати: **Cloudflare Pages → your project → Settings → Environment variables**.
+
 - `VITE_SUPABASE_URL` = `https://lkorkbqvvjenveacmzxr.supabase.co`
 - `VITE_SUPABASE_ANON_KEY` = `sb_publishable_eUITPNqCua2fFaw84JOPkQ_Lds9QpHo`
+
+Додай обидві змінні для:
+- `Production`
+- `Preview`
 
 Save → перший build запуститься автоматично.
 
@@ -71,3 +77,14 @@ Save → перший build запуститься автоматично.
    - `Account - Workers Scripts: Edit` (опціонально, якщо використовуєш Workers)
    - `Zone - Zone: Read` (за потреби маршрутизації/доменів)
 3. Онови `CLOUDFLARE_API_TOKEN` новим токеном і перезапусти деплой
+
+### Після деплою чорний екран + `Supabase env vars missing`
+
+Причина: під час `npm run build` не були доступні `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`, тому зібрався фронт без Supabase-конфігу.
+
+Що зробити:
+
+1. Перевір `Settings → Environment variables` у Cloudflare Pages
+2. Додай `VITE_SUPABASE_URL` і `VITE_SUPABASE_ANON_KEY` для `Production` і `Preview`
+3. Перезапусти деплой
+4. Перевір в browser DevTools, що помилка зникла
