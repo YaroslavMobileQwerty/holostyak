@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
+import { getDemoMyBets } from '@/lib/demoPublicData'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -13,6 +15,7 @@ export function useMyBets(status: string | null, page: number) {
     queryKey: ['myBets', user?.id, status, page],
     enabled: !!user?.id,
     queryFn: async () => {
+      if (isDemoMode()) return getDemoMyBets(user!.id, status, page, PAGE_SIZE)
       let q = supabase
         .from('bets')
         .select(

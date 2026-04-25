@@ -12,7 +12,8 @@
     "test": "vitest",
     "test:e2e": "playwright test",
     "format": "prettier --write .",
-    "db:types": "supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/lib/database.types.ts"
+    "db:types": "supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/lib/database.types.ts",
+    "db:seed:demo": "supabase db query -f supabase/seed_investor_demo.sql --local"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",

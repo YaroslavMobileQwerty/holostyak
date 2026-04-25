@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import type { RealtimePostgresChangesPayload } from '@supabase/supabase-js'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { isDemoMode } from '@/lib/demoMode'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 import { bumpChannels } from './realtimeHealth'
@@ -22,7 +23,7 @@ export function useEpisodeRealtime(
   }, [opts?.onChannelError])
 
   useEffect(() => {
-    if (!episodeId || !user) return
+    if (isDemoMode() || !episodeId || !user) return
 
     const ch = supabase
       .channel(`episode-status-${episodeId}`)

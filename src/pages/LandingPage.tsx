@@ -30,14 +30,30 @@ export function LandingPage() {
       </section>
 
       {bachelors && bachelors.length > 0 && (
-        <section className="mt-20 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <section
+          className={`mt-20 grid grid-cols-1 gap-4 ${bachelors.length > 1 ? 'md:grid-cols-2' : 'mx-auto max-w-md'}`}
+        >
           {bachelors.map((b) => (
-            <div key={b.id} className="rounded-2xl border border-primary/20 bg-bg-card p-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-primary-live">
-                Холостяк #{b.order_index}
-              </p>
-              <h2 className="mt-2 font-serif text-3xl">{b.name}</h2>
-              {b.bio && <p className="mt-3 text-sm text-rose-dust">{b.bio}</p>}
+            <div
+              key={b.id}
+              className="overflow-hidden rounded-2xl border border-primary/20 bg-bg-card"
+            >
+              {b.photo_url ? (
+                <img
+                  src={b.photo_url}
+                  alt={b.name}
+                  className="aspect-[3/4] w-full object-cover object-top"
+                />
+              ) : (
+                <div className="aspect-[3/4] bg-gradient-to-br from-burgundy to-bg-elevated" />
+              )}
+              <div className="p-6">
+                <p className="text-xs uppercase tracking-[0.3em] text-primary-live">
+                  Холостяк #{b.order_index}
+                </p>
+                <h2 className="mt-2 font-serif text-3xl">{b.name}</h2>
+                {b.bio && <p className="mt-3 text-sm text-rose-dust">{b.bio}</p>}
+              </div>
             </div>
           ))}
         </section>

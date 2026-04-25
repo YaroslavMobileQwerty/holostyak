@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { RealtimePostgresChangesPayload } from '@supabase/supabase-js'
 import { useQueryClient } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 import { bumpChannels } from './realtimeHealth'
@@ -35,7 +36,7 @@ export function useLightningRealtime(
   }, [opts?.onChannelError, opts?.onNewLightning])
 
   useEffect(() => {
-    if (!episodeId || !user) return
+    if (isDemoMode() || !episodeId || !user) return
     const userId = user.id
 
     const invalidate = () => {

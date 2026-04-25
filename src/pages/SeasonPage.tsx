@@ -13,6 +13,8 @@ export function SeasonPage() {
   const { data: bachelors } = useBachelors(season?.id)
   const { data: participants, isLoading: partLoading } = useParticipants(season?.id)
   const [filter, setFilter] = useState<Filter>('all')
+  const twoBachelors = bachelors && bachelors.length >= 2
+  const effective: Filter = !twoBachelors && filter === 'bach2' ? 'all' : filter
 
   if (seasonLoading) {
     return (
@@ -28,11 +30,11 @@ export function SeasonPage() {
   }
 
   const filtered = participants?.filter((p) => {
-    if (filter === 'all') return true
-    if (filter === 'eliminated') return p.status === 'eliminated'
-    if (filter === 'bach1')
+    if (effective === 'all') return true
+    if (effective === 'eliminated') return p.status === 'eliminated'
+    if (effective === 'bach1')
       return p.current_bachelor_id === bachelors?.[0]?.id && p.status === 'active'
-    if (filter === 'bach2')
+    if (effective === 'bach2')
       return p.current_bachelor_id === bachelors?.[1]?.id && p.status === 'active'
     return true
   })
@@ -43,8 +45,10 @@ export function SeasonPage() {
         <h1 className="font-serif text-4xl">{season.title}</h1>
       </header>
 
-      {bachelors && bachelors.length === 2 && (
-        <section className="mt-8 grid gap-4 md:grid-cols-2">
+      {bachelors && bachelors.length > 0 && (
+        <section
+          className={`mt-8 grid gap-4 ${bachelors.length === 1 ? 'mx-auto max-w-md' : 'md:grid-cols-2'}`}
+        >
           {bachelors.map((b) => (
             <BachelorCard
               key={b.id}
@@ -59,13 +63,17 @@ export function SeasonPage() {
 
       <section className="mt-12">
         <div className="mb-4 flex flex-wrap gap-2">
-          {(['all', 'bach1', 'bach2', 'eliminated'] as const).map((f) => (
+          {(
+            (twoBachelors
+              ? (['all', 'bach1', 'bach2', 'eliminated'] as const)
+              : (['all', 'bach1', 'eliminated'] as const)) as Filter[]
+          ).map((f) => (
             <button
               key={f}
               type="button"
               onClick={() => setFilter(f)}
               className={`rounded-full border px-4 py-1.5 text-sm transition ${
-                filter === f
+                effective === f
                   ? 'border-primary-live bg-primary-live/10 text-primary-live'
                   : 'border-white/20'
               }`}

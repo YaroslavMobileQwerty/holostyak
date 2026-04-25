@@ -16,7 +16,13 @@ export function BachelorCard({ name, bio, photoUrl, orderIndex }: Props) {
       <motion.div
         className="aspect-[3/4] bg-gradient-to-br from-burgundy to-bg-elevated"
         style={
-          photoUrl ? { backgroundImage: `url(${photoUrl})`, backgroundSize: 'cover' } : undefined
+          photoUrl
+            ? {
+                backgroundImage: `url(${photoUrl})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center 25%',
+              }
+            : undefined
         }
         whileHover={reduced ? undefined : { scale: 1.02 }}
         transition={{ duration: 0.3 }}

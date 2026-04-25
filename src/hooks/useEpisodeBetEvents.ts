@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
+import { getDemoBetEventsForEpisode } from '@/lib/demoPublicData'
 import { supabase } from '@/lib/supabase'
 
 export function useEpisodeBetEvents(episodeId: string | undefined) {
@@ -6,6 +8,7 @@ export function useEpisodeBetEvents(episodeId: string | undefined) {
     queryKey: ['episodeBetEvents', episodeId],
     enabled: !!episodeId,
     queryFn: async () => {
+      if (isDemoMode() && episodeId) return getDemoBetEventsForEpisode(episodeId)
       const { data, error } = await supabase
         .from('bet_events')
         .select('*, bet_options(*)')

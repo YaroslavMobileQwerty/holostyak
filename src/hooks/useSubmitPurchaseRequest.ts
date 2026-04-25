@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { trackPlausible } from '@/analytics/plausible'
+import { isDemoMode } from '@/lib/demoMode'
 import { supabase } from '@/lib/supabase'
 import { toWebpFile } from '@/lib/toWebpFile'
 import { useAuth } from '@/hooks/useAuth'
@@ -9,6 +10,9 @@ export function useSubmitPurchaseRequest() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (input: { amount: number; userComment?: string; screenshot: File }) => {
+      if (isDemoMode()) {
+        throw new Error('Демо-режим: заявки на коїни не відправляються.')
+      }
       if (!user?.id) throw new Error('Not authenticated')
       const webp = await toWebpFile(input.screenshot)
       const path = `${user.id}/${crypto.randomUUID()}.webp`

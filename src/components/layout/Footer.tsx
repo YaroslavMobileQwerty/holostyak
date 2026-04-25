@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-white/10 bg-bg-card py-8">
+    <footer className="mt-20 border-t border-white/10 bg-bg-card py-8 max-md:pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))]">
       <div className="mx-auto max-w-6xl px-4 text-center text-sm text-rose-dust">
         <p>🇺🇦 100% зібраних коштів йде на підтримку ЗСУ</p>
         <p className="mt-2 text-xs text-rose-dust/60">

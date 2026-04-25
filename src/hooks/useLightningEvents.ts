@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
+import { getDemoLightningForEpisode } from '@/lib/demoPublicData'
 import { supabase } from '@/lib/supabase'
 
 export function useLightningEvents(
@@ -10,6 +12,7 @@ export function useLightningEvents(
     enabled: !!episodeId,
     refetchInterval: opts?.refetchIntervalMs ?? false,
     queryFn: async () => {
+      if (isDemoMode() && episodeId) return getDemoLightningForEpisode(episodeId)
       const { data, error } = await supabase
         .from('bet_events')
         .select('*, bet_options(*)')

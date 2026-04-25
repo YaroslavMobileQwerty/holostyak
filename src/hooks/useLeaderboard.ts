@@ -1,4 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
+import {
+  getDemoLeaderboardAllRows,
+  getDemoLeaderboardSeasonLikeRows,
+} from '@/lib/demoPublicData'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from './useAuth'
 
@@ -75,6 +80,16 @@ export function useLeaderboard(scope: LeaderboardScope) {
   return useQuery({
     queryKey: ['leaderboard', scope],
     queryFn: async () => {
+      if (isDemoMode()) {
+        if (scope === 'all') {
+          return getDemoLeaderboardAllRows()
+            .map((row) => mapAll(row))
+            .filter((r): r is LeaderboardRowModel => r !== null)
+        }
+        return getDemoLeaderboardSeasonLikeRows()
+          .map((row) => mapSeasonWeek(row))
+          .filter((r): r is LeaderboardRowModel => r !== null)
+      }
       if (scope === 'all') {
         const { data, error } = await supabase
           .from('leaderboard_all_time')
@@ -104,6 +119,14 @@ export function useMyLeaderboardRow(scope: LeaderboardScope) {
     enabled: !!uid,
     queryFn: async () => {
       if (!uid) return null
+      if (isDemoMode()) {
+        if (scope === 'all') {
+          const row = getDemoLeaderboardAllRows().find((r) => r.user_id === uid)
+          return row ? mapAll(row) : null
+        }
+        const row = getDemoLeaderboardSeasonLikeRows().find((r) => r.user_id === uid)
+        return row ? mapSeasonWeek(row) : null
+      }
       if (scope === 'all') {
         const { data, error } = await supabase
           .from('leaderboard_all_time')

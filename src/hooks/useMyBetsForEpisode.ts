@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
+import { getDemoMyBetsForEpisodeMap } from '@/lib/demoPublicData'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 import type { Tables } from '@/lib/database.types'
@@ -9,6 +11,7 @@ export function useMyBetsForEpisode(episodeId: string | undefined) {
     queryKey: ['myBetsEpisode', user?.id, episodeId],
     enabled: !!user?.id && !!episodeId,
     queryFn: async () => {
+      if (isDemoMode() && episodeId) return getDemoMyBetsForEpisodeMap(user!.id, episodeId)
       const { data: evs, error: e1 } = await supabase
         .from('bet_events')
         .select('id')

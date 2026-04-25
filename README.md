@@ -27,10 +27,11 @@
 ```bash
 npm install
 cp .env.example .env.local  # заповнити Supabase URL + anon key
+# опційно в dev: VITE_DEV_MOCK_ADMIN=true — UI адмінки; VITE_DEV_MOCK_USER_ID=<uuid з profiles> — ніби залогінений, якщо сесії ще немає (див. .env.example; RLS залишаться на сервері)
 npm run dev                 # http://localhost:5173
 ```
 
-**Перший акаунт з роллю `admin`:** тільки вручну в Supabase (SQL), напр. `update public.profiles set role = 'admin' where id = '…'`. Клієнт не може «призначити себе» адміном; подальше керування ролями — через `admin_set_role` (див. Phase 6 plan).
+**Перший акаунт з роллю `admin`:** тільки вручну в Supabase (SQL), напр. `update public.profiles set role = 'admin' where id = '…'`. Клієнт не може «призначити себе» адміном; подальше керування ролями — через `admin_set_role` (див. Phase 6 plan). Для швидкого перегляду UI адмінки локально див. `VITE_DEV_MOCK_ADMIN` у `.env.example`.
 
 Корисні скрипти:
 
@@ -56,6 +57,7 @@ npm run db:types            # згенерувати типи з remote Supabase
 - [Phase 8 Plan — Motion / Polish (implementation)](docs/superpowers/plans/2026-04-25-phase-8-motion-polish.md)
 - [Google OAuth setup](docs/google-oauth-setup.md)
 - [Cloudflare Pages setup](docs/cloudflare-pages-setup.md)
+- [Investor / staging demo (season 14 seed)](docs/investor-demo.md)
 
 ## Environment variables
 
@@ -64,4 +66,6 @@ npm run db:types            # згенерувати типи з remote Supabase
 | `VITE_SUPABASE_URL`      | URL Supabase проєкту             |
 | `VITE_SUPABASE_ANON_KEY` | Публічний `anon` ключ Supabase   |
 | `VITE_SENTRY_DSN`        | Опційно: DSN для Sentry browser SDK |
+| `VITE_DEV_MOCK_ADMIN`    | Тільки `npm run dev`: `true` / `1` — відкрити `/admin` у UI; Supabase RPC далі вимагатимуть реальний `role` |
+| `VITE_DEV_MOCK_USER_ID`  | Тільки `npm run dev`: валідний UUID — UI як після логіну **без JWT**; `useProfile` повертає локальний мок-рядок, реальні запити до API й далі вимагатимуть sign-in |
 | `SUPABASE_PROJECT_ID`    | Project ID (для `npm run db:types`) |

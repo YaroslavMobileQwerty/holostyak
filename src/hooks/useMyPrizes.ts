@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 import type { Tables } from '@/lib/database.types'
@@ -13,6 +14,7 @@ export function useMyPrizes() {
     queryKey: ['myPrizes', user?.id],
     enabled: !!user,
     queryFn: async () => {
+      if (isDemoMode()) return [] as MyPrizeRow[]
       const { data, error } = await supabase
         .from('season_prizes')
         .select('*, seasons (number, title)')

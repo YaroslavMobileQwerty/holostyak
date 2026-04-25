@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from './useAuth'
 import type { Tables } from '@/lib/database.types'
@@ -13,6 +14,7 @@ export function useMyAchievements() {
     queryKey: ['myAchievements', user?.id],
     enabled: !!user?.id,
     queryFn: async () => {
+      if (isDemoMode()) return [] as AchievementWithUnlock[]
       const { data: all, error: e1 } = await supabase
         .from('achievements')
         .select('*')
@@ -38,6 +40,9 @@ export function useUserAchievementsForUser(userId: string | undefined) {
     queryKey: ['userAchievementsForUser', userId],
     enabled: !!userId,
     queryFn: async () => {
+      if (isDemoMode()) {
+        return [] as AchievementWithUnlock[]
+      }
       const { data: all, error: e1 } = await supabase
         .from('achievements')
         .select('*')
@@ -62,6 +67,7 @@ export function useUserAchievementsPublic(userId: string | undefined) {
     queryKey: ['userAchievementsPublic', userId],
     enabled: !!userId,
     queryFn: async () => {
+      if (isDemoMode()) return [] as AchievementWithUnlock[]
       const { data: ua, error: e1 } = await supabase
         .from('user_achievements')
         .select('achievement_id, unlocked_at')

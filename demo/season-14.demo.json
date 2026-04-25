@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "version": 1,
+    "locale": "uk-UA",
+    "disclaimer": "Публічні імена (прес/офіційні джерела) для демо UI. Портрети — ліцензовані плейсхолдери (picsum.photos), не зі СТБ; заміни на погоджені медіа перед продакшеном."
+  },
+  "season": {
+    "number": 14,
+    "title": "Холостяк 14",
+    "status": "active",
+    "summary": "Сезон з Тарасом Цимбалюком. Демо-дані для презентації; графіки випусків і ставок узгоджені з supabase/seed_investor_demo.sql."
+  },
+  "bachelors": [
+    {
+      "id_ref": "bachelor_1",
+      "name": "Тарас Цимбалюк",
+      "age": 35,
+      "bio": "Актор кіно та серіалів, колишній учасник «Танців з зірками».",
+      "photo_note": "picsum.photos seed=holostyak_s14_taras"
+    }
+  ],
+  "participants": [
+    { "id_ref": "p1", "name": "Анастасія Половинкіна", "age": 26, "city": "Київ", "bio": "PR-стратег, любить велотуризм" },
+    { "id_ref": "p2", "name": "Софія Шамія", "age": 25, "city": "Львів", "bio": "Психологиня" },
+    { "id_ref": "p3", "name": "Яна Андрієнко", "age": 28, "city": "Одеса", "bio": "Event-менеджер" },
+    { "id_ref": "p4", "name": "Діана Зотова", "age": 24, "city": "Дніпро", "bio": "Маркетологиня" },
+    { "id_ref": "p5", "name": "Вікторія Крилас", "age": 27, "city": "Харків", "bio": "Декораторка" },
+    { "id_ref": "p6", "name": "Оксана Шанюк", "age": 29, "city": "Вінниця", "bio": "Підприємиця" },
+    { "id_ref": "p7", "name": "Дар\u0027я Романець", "age": 23, "city": "Чернівці", "bio": "Студентка" },
+    { "id_ref": "p8", "name": "Валерія Жуковська", "age": 30, "city": "Київ", "bio": "Юристка" },
+    { "id_ref": "p9", "name": "Надія Авраменко", "age": 26, "city": "Полтава", "bio": "IT-рекрутерка" },
+    { "id_ref": "p10", "name": "Ірина Кулешина", "age": 27, "city": "Запоріжжя", "bio": "Флористка" },
+    { "id_ref": "p11", "name": "Ольга Дзундза", "age": 32, "city": "Тернопіль", "bio": "Аграрна кухарка" },
+    { "id_ref": "p12", "name": "Марина Дурицька", "age": 28, "city": "Рівне", "bio": "Дизайнерка меблів" }
+  ],
+  "episodes_draft": [
+    { "number": 1, "label": "Випуск 1", "ui_status": "finalized" },
+    { "number": 2, "label": "Випуск 2", "ui_status": "finalized" },
+    { "number": 3, "label": "Випуск 3", "ui_status": "open" },
+    { "number": 4, "label": "Випуск 4", "ui_status": "locked" },
+    { "number": 5, "label": "Випуск 5", "ui_status": "draft" },
+    { "number": 6, "label": "Випуск 6", "ui_status": "draft" }
+  ],
+  "betting_scenario": {
+    "resolved_in_ep1": {
+      "title": "Хто отримає останню троянду в 1-му випуску?",
+      "type": "first_rose",
+      "outcome": "p3"
+    },
+    "open_in_ep3": {
+      "title": "Хто залишиться після пікніка (3 випуск)?",
+      "type": "custom"
+    }
+  },
+  "demo_accounts": {
+    "note": "Паролі в seed SQL (email login). Користувач 1 = admin; інші = звичайні. Лише dev/staging.",
+    "emails": [
+      "demo-admin@holostyak-investor.local",
+      "demo-anna@holostyak-investor.local",
+      "demo-oleh@holostyak-investor.local",
+      "demo-ira@holostyak-investor.local",
+      "demo-katya@holostyak-investor.local"
+    ]
+  }
+}

@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
+import { getDemoCoinTransactions } from '@/lib/demoPublicData'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -14,6 +16,7 @@ export function useCoinTransactions(kind: string | null, page: number) {
     enabled: !!user?.id,
     refetchInterval: 30_000,
     queryFn: async () => {
+      if (isDemoMode()) return getDemoCoinTransactions(user!.id, page, PAGE_SIZE, kind)
       let q = supabase
         .from('coin_transactions')
         .select('*', { count: 'exact' })

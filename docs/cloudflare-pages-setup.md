@@ -13,6 +13,11 @@
    - Build command: `npm run build`
    - Build output directory: `dist`
    - Root directory: `/`
+4. **Deploy settings (важливо):**
+   - Якщо поле **Deploy command** обов'язкове, використовуй:
+     - `npx wrangler pages deploy dist --project-name=holostyak-tote`
+   - Не використовуй `npx wrangler deploy` (це команда для Workers, не для Pages)
+   - Переконайся, що токен у `CLOUDFLARE_API_TOKEN` має права для Pages (див. Troubleshooting нижче)
 
 ## Крок 2 — Environment Variables (Production + Preview)
 
@@ -41,3 +46,28 @@ Save → перший build запуститься автоматично.
 1. GitHub Actions → workflow `CI` зелений
 2. Cloudflare Pages → Deployment зелений
 3. Prod URL відкривається, лендінг бачимо
+
+## Troubleshooting
+
+### Помилка: `Missing entry-point to Worker script or to assets directory`
+
+Причина: був запущений `wrangler deploy` замість Pages-команди.
+
+Що зробити:
+
+1. У Cloudflare Pages відкрий **Settings → Builds & deployments**
+2. Видали `npx wrangler deploy` з **Deploy command**
+3. Перезапусти деплой
+
+### Помилка: `Authentication error [code: 10000]` при `wrangler pages deploy`
+
+Причина: у середовищі заданий `CLOUDFLARE_API_TOKEN`, але токен не має потрібних прав для Pages API.
+
+Що зробити:
+
+1. Якщо поле **Deploy command** required, залиш `npx wrangler pages deploy dist --project-name=holostyak-tote`
+2. Створи новий API token з правами щонайменше:
+   - `Account - Cloudflare Pages: Edit`
+   - `Account - Workers Scripts: Edit` (опціонально, якщо використовуєш Workers)
+   - `Zone - Zone: Read` (за потреби маршрутизації/доменів)
+3. Онови `CLOUDFLARE_API_TOKEN` новим токеном і перезапусти деплой

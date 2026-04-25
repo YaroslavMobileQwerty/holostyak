@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
+import { isDevMockAdminEnabled } from '@/lib/devMockAdmin'
 import { useProfile } from '@/hooks/useProfile'
 import { Skeleton } from '@/components/ui/Skeleton'
 
@@ -11,8 +12,9 @@ export function AdminRoute({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const toastShown = useRef(false)
 
+  const isAdmin = isDevMockAdminEnabled() || profile?.role === 'admin'
   const ready = !authLoading && !profileLoading
-  const denied = ready && isAuthenticated && profile?.role !== 'admin'
+  const denied = ready && isAuthenticated && !isAdmin
 
   useEffect(() => {
     if (denied && !toastShown.current) {
@@ -33,7 +35,7 @@ export function AdminRoute({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />
   }
 
-  if (profile?.role !== 'admin') {
+  if (!isAdmin) {
     return <Navigate to="/" replace />
   }
 

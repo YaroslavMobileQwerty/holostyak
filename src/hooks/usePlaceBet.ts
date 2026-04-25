@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -7,6 +8,9 @@ export function usePlaceBet() {
   const { user } = useAuth()
   return useMutation({
     mutationFn: async (args: { eventId: string; optionId: string; amount: number }) => {
+      if (isDemoMode()) {
+        throw new Error('Демо-режим: ставки не зберігаються. Вимкніть VITE_DEMO_MODE і підключіть Supabase.')
+      }
       const { data, error } = await supabase.rpc('place_bet', {
         p_event_id: args.eventId,
         p_option_id: args.optionId,

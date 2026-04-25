@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { isDemoMode } from '@/lib/demoMode'
+import { getDemoBachelors } from '@/lib/demoPublicData'
 import { supabase } from '@/lib/supabase'
 
 export function useBachelors(seasonId: string | undefined) {
@@ -6,6 +8,7 @@ export function useBachelors(seasonId: string | undefined) {
     queryKey: ['bachelors', seasonId],
     enabled: !!seasonId,
     queryFn: async () => {
+      if (isDemoMode() && seasonId) return getDemoBachelors(seasonId)
       const { data, error } = await supabase
         .from('bachelors')
         .select('*')
